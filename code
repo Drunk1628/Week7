@@ -1,0 +1,22 @@
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+String val;
+
+void setup() {
+  lcd.init();
+  lcd.backlight();
+}
+
+void loop() {
+  lcd.setCursor(0, 0);
+  lcd.print("Detected Color:");
+  lcd.setCursor(0, 1);
+  if (Serial.available()) {
+    val = Serial.readStringUntil('\n');
+    val.trim();
+    Serial.println(val);
+  }
+  if (val == "red") lcd.print("Red");
+  if (val == "green") lcd.print("Green");
+  if (val == "blue") lcd.print("Blue");
+}
